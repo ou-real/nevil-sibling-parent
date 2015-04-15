@@ -7,6 +7,7 @@ option(O "Enable optimization" OFF)
 option(GUI "Build with GUI tools" OFF)
 
 if(DEBUG)
+  MESSAGE("Enabling Debugging")
   add_definitions(-g)
 elseif(O)
   MESSAGE("Enabling Optimization")

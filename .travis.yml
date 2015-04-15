@@ -1,7 +1,8 @@
-language: cpp
-compiler: 
+language:
+  - cpp
+
+compiler:
   - gcc
-  - clang
 
 script:
   - cmake CMakeLists.txt -DGUI=OFF -DDEBUG=ON -DO=OFF
@@ -11,7 +12,9 @@ script:
 
   - cmake CMakeLists.txt -DGUI=OFF -DDEBUG=OFF -DO=ON
   - make
+
   - cmake CMakeLists.txt -DGUI=ON -DDEBUG=ON -DO=OFF
   - make
+
   - cmake CMakeLists.txt -DGUI=ON -DDEBUG=OFF -DO=ON
   - make
