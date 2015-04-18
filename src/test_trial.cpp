@@ -8,7 +8,6 @@ nevil::test_trial::test_trial(nevil::args &cl_args)
   const int WORLD_SIZE_Y = 50;
 
   _population_size = std::stoi(cl_args["ps"]);
-  bool sibling_neuron = (cl_args["sn"] == "true");
   float bracket_ratio = std::stof(cl_args["br"]);
   float mutation_rate = std::stof(cl_args["mr"]);
 

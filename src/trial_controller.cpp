@@ -12,7 +12,6 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _max_generation_num = 200;
   _max_step_num = 1000;
   std::string trial_name = "TestTrial";
-  bool sibling_neuron = false;
   float mutation_rate = 0.25;
   float bracket_ratio = 0.1;
 
