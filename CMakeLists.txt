@@ -2,18 +2,21 @@ cmake_minimum_required(VERSION 2.8.0)
 
 project(nevil)
 
-option(DEBUG "Enable debugging flags" ON)
+option(DEBUG "Enable debugging flags" OFF)
 option(O "Enable optimization" OFF)
 option(GUI "Build with GUI tools" OFF)
 
 if(DEBUG)
   MESSAGE("Enabling Debugging")
   add_definitions(-g)
-elseif(O)
+endif(DEBUG)
+
+if(O)
   MESSAGE("Enabling Optimization")
   add_definitions(-O3)
   add_definitions(-DNDEBUG)
-endif(DEBUG)
+endif(O)
+
 add_definitions(-std=c++0x)
 
 

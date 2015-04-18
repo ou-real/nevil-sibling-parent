@@ -20,7 +20,7 @@ cmake CMakeLists.txt <-DDEBUG=ON/OFF> <-DO=ON/OFF> <-DGUI=ON/OFF>
 make
 ```
 Options:
-* DDEBUG: for enabling debug mode. This value is ON by default.
+* DDEBUG: for enabling debug mode. This value is OFF by default.
 * DO: This flag enables O3 optimization and turns off assertions. This value is OFF by default.
 * DGUI: For enabling GUI (disables multithreading). This value is OFF by default.
 
