@@ -73,7 +73,6 @@ void nevil::parallel::_run_trial(nevil::args cl_args, size_t start_id, size_t en
   srand(random_seed);
   for (int i = start_id; i < end_id; ++i)
   {
-    printf("%d\n", i);
     nevil::trial_controller controller (i, rand(), cl_args);
     controller.run();
   }
