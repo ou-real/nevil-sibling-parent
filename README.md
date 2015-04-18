@@ -1,12 +1,10 @@
-#NEVIL: Nurturing and EVolution of Intelligence and Learning [![Build Status](https://travis-ci.org/ou-real/nevil-base.svg?branch=master)](https://travis-ci.org/ou-real/nevil-base)
-This the base project for NEVIL light-switch based nurturing experiments. This project provides libraries and base classes for different experiments to be build upon.
+#NEVIL: Sibling Experiment
 
-This repository is meant to be forked and extended for different experiments.
 
 ##Usage
 You can clone this repository by running:
 ```bash
-git clone https://github.com/ou-real/nevil-base.git
+git clone https://github.com/ou-real/nevil-sibling.git
 ```
 
 ###Compilation/Install
@@ -67,15 +65,11 @@ Example
 ./nevil -tn 1 -ps 80 -sn true -xn TestTrial -ms 1000 -mg 200
 ```
 
-###Adding Experiments
-To add experiments you need to extend the following classes and provide your own implementation for **at least** the virtual methods. The files prefixed with test are place holders and can be deleted. You may follow the pattern used in test files. Here is a list of classes that you need to extend: 
-* `arena` Example: `test_arena`
-* `robot` Example: `test_robot`
-* `individual` Example: `test_individual`
-* `trial` Example: `test_trial`. You need to include this module in `trial_controller.hpp` and change the type of `* _trial` to `nevil::your_trial`
-* You also need to make a population class Example: `test_population`
-
-You can look at other experiments in this [organization](https://github.com/ou-real) as a guide.
+###Sibling Experiment
+####Experiment arguments
+* `sn`:
+* `mr`:
+* `br`:
 
 
 ##Dependencies
@@ -116,7 +110,7 @@ sudo apt-get install libqt4-core libqt4-dev libqt4-gui qt4-dev-tools
 sudo apt-get install freeglut3 freeglut3-dev #(Not sure these are necessary)
 ```
 ##Structure
-    nevil-base
+    nevil-sibling
     ├── README.md                   - Description
     ├── .gitignore                  - Files ignore by Git
     ├── CMakeLists.txt              - Cmake file for this project
@@ -142,9 +136,9 @@ sudo apt-get install freeglut3 freeglut3-dev #(Not sure these are necessary)
         ├── util                    - Implementation files for utility modules
         └── *.cpp                   - Other implementation files specific to the project
 
-##[Potential Bugs](https://github.com/ou-real/nevil-base/issues)
+##[Potential Bugs](https://github.com/ou-real/nevil-sibling/issues)
 
-##[To do](https://github.com/ou-real/nevil-base/milestones)
+##[To do](https://github.com/ou-real/nevil-sibling/milestones)
 
 ##License
 [MIT license](http://opensource.org/licenses/MIT)
