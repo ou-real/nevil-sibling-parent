@@ -36,14 +36,9 @@ nevil::args nevil::parser::read_cl(int argc, char *argv[])
       std::string arg_name = std::string(argv[i]);
       //Erasing the starting dash
       arg_name.erase(arg_name.begin());
-      // Default value for flags
+
       std::string arg_value = "true";
-      ++i;
-      if (i < argc && argv[i][0] != '-')
-          arg_value = std::string(argv[i]);
-      else
-        --i;
-      cl_args[arg_name] = arg_value;
+      cl_args[arg_name] = std::string(argv[++i]);
     }
   }
   return cl_args;

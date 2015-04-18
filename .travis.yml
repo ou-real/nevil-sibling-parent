@@ -3,6 +3,7 @@ language:
 
 compiler:
   - gcc
+  - clang
 
 script:
   - cmake CMakeLists.txt -DGUI=OFF -DDEBUG=ON -DO=OFF

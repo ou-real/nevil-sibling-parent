@@ -5,7 +5,7 @@ void nevil::parallel::simulator(nevil::args &cl_args)
   using namespace nevil;
   using namespace nevil::parallel;
 
-  srand(time(0));
+  srand(time(NULL));
   
   // Default values
   int num_threads = os::get_num_processors() - 1;
@@ -47,45 +47,35 @@ void nevil::parallel::simulator(nevil::args &cl_args)
     return;
   }
 
-  // Using pthread to run trials in parallel
-  std::vector<pthread_t> threads(num_threads);
-  std::vector<thread_data> data(num_threads);
-  int load = num_trials / num_threads;
+  std::vector<std::thread *> threads(num_threads);
+  const size_t load = num_trials / num_threads;
   int remeinder = num_trials % num_threads;
+  size_t start_id = 1;
+  size_t end_id = 1;
 
   // Launching threads
   for(int i = 0; i < num_threads; ++i)
   {
-    data[i].cl_args = &cl_args;
-    data[i].random_seed = rand();
-    // Crazy load balancing... move along
-    data[i].start_id = (i == 0) ? 1 : data[i-1].end_id;
-    data[i].end_id = data[i].start_id + load + (remeinder-- > 0);
-
-    int rc = pthread_create(&threads[i], NULL, parallel::_run_trial, (void *)&data[i]);
-    if (rc)
-    {
-      std::cerr << "Error: unable to create thread.\nAborting now..." << std::endl;
-      exit(-1);
-    }
+    end_id = start_id + load + (remeinder-- > 0);
+    threads[i] = new std::thread (_run_trial, cl_args, start_id, end_id, rand());
+    start_id = end_id;
   }
-  // pthread_exit(NULL);
-  for (auto t : threads)
-    pthread_join(t, NULL);
+
+  for (auto i : threads)
+  {
+    i->join();
+    delete i;
+  }
 }
 
-void *nevil::parallel::_run_trial(void *data)
+void nevil::parallel::_run_trial(nevil::args cl_args, size_t start_id, size_t end_id, unsigned random_seed)
 {
-  using namespace nevil;
-
-  parallel::thread_data *t_data = (thread_data *) data;
-  srand(t_data->random_seed);
-
-  for (size_t i = t_data->start_id; i < t_data->end_id; ++i)
+  srand(random_seed);
+  for (int i = start_id; i < end_id; ++i)
   {
-    trial_controller controller (i, rand(), *(t_data->cl_args));
+    printf("%d\n", i);
+    nevil::trial_controller controller (i, rand(), cl_args);
     controller.run();
   }
-  pthread_exit(NULL);
 }
 

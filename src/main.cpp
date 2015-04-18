@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
   set_output_path(cl_args);
 
   srand(time(0));
-  trial_controller _controller (1, rand(), cl_args);
-  _controller.run();
+  trial_controller controller (1, rand(), cl_args);
+  controller.run();
 
   return app.exec();
 }

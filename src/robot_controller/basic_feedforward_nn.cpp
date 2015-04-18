@@ -5,15 +5,15 @@ nevil::basic_feedforward_nn::basic_feedforward_nn() {}
 nevil::basic_feedforward_nn::basic_feedforward_nn(size_t input_num, size_t num_output_nodes)
   : _num_input_nodes(input_num)
   , _num_output_nodes(num_output_nodes)
-  {
-    _weights = std::vector<double>(_num_input_nodes * _num_output_nodes, 0);
-  }
+{
+  _weights = std::vector<double>(_num_input_nodes * _num_output_nodes, 0);
+}
 
 nevil::basic_feedforward_nn::basic_feedforward_nn(const basic_feedforward_nn &rhs)
  : _num_input_nodes(rhs._num_input_nodes)
  , _num_output_nodes(rhs._num_output_nodes)
  , _weights(rhs._weights)
-  {}
+{}
 
 nevil::basic_feedforward_nn::~basic_feedforward_nn() {}
 

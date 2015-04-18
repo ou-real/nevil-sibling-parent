@@ -1,9 +1,9 @@
 #ifndef _NAME_TEST_INDIVIDUAL_HPP_
 #define _NAME_TEST_INDIVIDUAL_HPP_
 
+#include <string>
 #include "individual.hpp"
 #include "nevil/util/random.hpp"
-#include <string>
 
 namespace nevil
 {

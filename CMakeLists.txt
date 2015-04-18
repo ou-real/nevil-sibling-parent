@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.0)
 
 project(nevil)
 
-option(DEBUG "Enable debugging flags" OFF)
+option(DEBUG "Enable debugging flags" ON)
 option(O "Enable optimization" OFF)
 option(GUI "Build with GUI tools" OFF)
 

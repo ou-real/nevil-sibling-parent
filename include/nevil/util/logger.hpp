@@ -26,7 +26,7 @@ namespace nevil
       if (!_output_file)
       {
         std::cerr << "Failed to open the file \"" << file_path << "\"\nAborting now..." << std::endl;
-        exit(1);
+        exit(-1);
       }
     }
 
@@ -38,7 +38,7 @@ namespace nevil
     inline void close_file()
     {
       _output_file.close();
-    };
+    }
 
     template <typename T>
     inline void write(const T &object, bool new_line = false)

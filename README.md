@@ -1,5 +1,5 @@
 #NEVIL: Nurturing and EVolution of Intelligence and Learning [![Build Status](https://travis-ci.org/ou-real/nevil-base.svg?branch=master)](https://travis-ci.org/ou-real/nevil-base)
-This the base project for light-switch based nurturing experiments. This project provides libraries and base classes for different experiments to be build upon.
+This the base project for NEVIL light-switch based nurturing experiments. This project provides libraries and base classes for different experiments to be build upon.
 
 This repository is meant to be forked and extended for different experiments.
 
@@ -16,14 +16,18 @@ git clone https://github.com/ou-real/nevil-base.git
 ####Unix
 The binaries will be written to build folder.
 ```bash
-cmake CMakeLists.txt <-DGUI=ON/OFF> # GUI is OFF by default
+cmake CMakeLists.txt <-DDEBUG=ON/OFF> <-DO=ON/OFF> <-DGUI=ON/OFF> 
+# DDEBUG is ON by default.
+# DO is OFF by default. This flag enables O3 optimization and turns off assertions.
+# DGUI is OFF by default.
 make
 ```
+
 
 ###Adding Experiments 
 
 ##Dependencies
-* [GCC](https://gcc.gnu.org) or [clang](http://clang.llvm.org)
+* [GCC](https://gcc.gnu.org) or [Clang](http://clang.llvm.org)
 * [CMake](http://www.cmake.org)
 * [ENKI](http://home.gna.org/enki/): Already included in the project.
 * [QT4.8](http://qt-project.org/doc/qt-4.8/): Optional, to enable GUI.
@@ -55,7 +59,7 @@ To install the required packages run the following commands:
 ```bash
 sudo apt-get install build-essential
 sudo apt-get install cmake
-sudo apt-get install git
+sudo apt-get install git-core
 sudo apt-get install libqt4-core libqt4-dev libqt4-gui qt4-dev-tools
 sudo apt-get install freeglut3 freeglut3-dev #(Not sure these are necessary)
 ```

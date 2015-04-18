@@ -13,14 +13,12 @@ namespace nevil
   class test_arena : public arena
   {
   public:
-    test_arena(int size_x, int size_y, const Enki::Color &arena_color = Enki::Color(0.9, 0.9, 0.9));
+    test_arena(int size_x, int size_y, 
+      const Enki::Color &arena_color = Enki::Color(0.9, 0.9, 0.9));
     virtual ~test_arena();
 
     void set_individuals(nevil::test_individual *i);
     bool update();
-
-  protected:
-    bool _sibling_neuron;
   };
 }
 #endif // _NEVIL_TEST_ARENA_HPP_
