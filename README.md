@@ -68,6 +68,22 @@ Example
 ```
 
 ###Adding Experiments
+First you need to create a repository under the ou-real organization and name it nevil-<your-experiment-name>.
+**Do not add any files to this repo.**
+
+####Forking this repository
+To fork this repository you need to follow the instructions below:
+```bash
+git clone <your new repository>
+cd <your new repository>
+git remote add upstream https://github.com/ou-real/nevil-base.git
+git fetch upstream
+git merge upstream/master
+git push origin master
+```
+Now you have a fork of nevil-base. 
+
+####Making changes
 To add experiments you need to extend the following classes and provide your own implementation for **at least** the virtual methods. The files prefixed with test are place holders and can be deleted. You may follow the pattern used in test files. Here is a list of classes that you need to extend: 
 * `arena` Example: `test_arena`
 * `robot` Example: `test_robot`
@@ -77,6 +93,8 @@ To add experiments you need to extend the following classes and provide your own
 
 You can look at other experiments in this [organization](https://github.com/ou-real) as a guide.
 
+####Keep up to date with nevil-base
+Too keep your code up to date with this repository, you can follow the instructions on [syncing a fork](https://help.github.com/articles/syncing-a-fork/) to cherry pick the changes that are made to `nevil-base`. This will not override your changes.
 
 ##Dependencies
 * [GCC](https://gcc.gnu.org) or [Clang](http://clang.llvm.org)
@@ -113,7 +131,7 @@ sudo apt-get install build-essential
 sudo apt-get install cmake
 sudo apt-get install git-core
 sudo apt-get install libqt4-core libqt4-dev libqt4-gui qt4-dev-tools
-sudo apt-get install freeglut3 freeglut3-dev #(Not sure these are necessary)
+sudo apt-get install freeglut3 freeglut3-dev
 ```
 ##Structure
     nevil-base
