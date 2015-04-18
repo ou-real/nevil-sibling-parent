@@ -57,11 +57,21 @@ void set_output_path(nevil::args &cl_args)
 {
   using namespace nevil;
   // Set output directory to default if user didn't specify one.
-  cl_args["output"] = DEFAULT_OUTPUT_PATH;
+  args::const_iterator it;
+  if ((it = cl_args.find("output")) != cl_args.end())
+    cl_args["output"] = it->second;
+  else
+    cl_args["output"] = DEFAULT_OUTPUT_PATH;
+
   os::create_directory(cl_args["output"]);
+  
+  if ((it = cl_args.find("xp_path")) != cl_args.end())
+    cl_args["xp_path"] =os::append_path(cl_args["output"], it->second);
+  else
+    cl_args["xp_path"] = os::append_path(cl_args["output"], os::get_time_name_dir());
 
   // Creating the trial path directory
-  cl_args["xp_path"] = os::append_path(cl_args["output"], os::get_time_name_dir());
+  std::cout << cl_args["xp_path"] << std::endl;
   os::create_directory(cl_args["xp_path"]);
 }
 
