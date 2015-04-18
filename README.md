@@ -24,8 +24,59 @@ Options:
 * DO: This flag enables O3 optimization and turns off assertions. This value is OFF by default.
 * DGUI: For enabling GUI (disables multithreading). This value is OFF by default.
 
+###Execution
+You can run this application by executing the following command. The binaries are written to the build directory.
+```bash
+cd build
+./nevil <args>
+```
+####Command line arguments
+This program takes command line arguments both for the simulation config and specific experiment config. You can pass any arguments (as long as they are not taken) and use them in your experiment.
+#####Simulation Arguments
+All arguments have default values
+* `output`: The output folder for this application. `result` by default.
+* `xp_path`: The path for output of that specific run only. Uses time for naming the directory by default.
+* `tn`: The number of threads. By default `number_of_cores - 1`. If you use negative numbers it will use `number_of_cores - n`. You can use `0` for all cores.
+* `mt`: Maximum number of trials to be simulates. 30 by default.
+* `rs`: Random seed. Uses a random seed to initialize the random number generator. Note if this argument is specified, the application will only run 1 trial and uses no threading.
+* `xn`: Experiment name. Default values are set in `trial_controller.cpp`: TestTrial.
+* `mg`: Maximum number of generations. Default values are set in `trial_controller.cpp`: 200.
+* `ms`: Maximum number of timesteps. Default values are set in `trial_controller.cpp`: 1000.
+* `ps`: Population size.  Default values are set in `trial_controller.cpp`: 80.
 
-###Adding Experiments 
+#####JSON
+You can use JSON to pass the desired command line arguments to the program.
+```bash
+./nevil control.json
+```
+JSON Example:
+```javascript
+{
+  "tn": 1,
+  "sn": true, 
+  "mg": 200,
+  "xn": "TestTrial",
+  "ms": 1000,
+  "ps": 80,
+}
+```
+##### Specifying using command line
+You have to use a dash `-` before the name of the argument the followed by the value.
+Example
+```bash
+./nevil -tn 1 -ps 80 -sn true -xn TestTrial -ms 1000 -mg 200
+```
+
+###Adding Experiments
+To add experiments you need to extend the following classes and provide your own implementation for **at least** the virtual methods. The files prefixed with test are place holders and can be deleted. You may follow the pattern used in test files. Here is a list of classes that you need to extend: 
+* `arena` Example: `test_arena`
+* `robot` Example: `test_robot`
+* `individual` Example: `test_individual`
+* `trial` Example: `test_trial`. You need to include this module in `trial_controller.hpp` and change the type of `* _trial` to `nevil::your_trial`
+* You also need to make a population class Example: `test_population`
+
+You can look at other experiments in this [organization](https://github.com/ou-real) as a guide.
+
 
 ##Dependencies
 * [GCC](https://gcc.gnu.org) or [Clang](http://clang.llvm.org)
