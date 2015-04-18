@@ -1,4 +1,4 @@
-#NEVIL: Sibling Experiment
+#NEVIL: Sibling Experiment [![Build Status](https://travis-ci.org/ou-real/nevil-sibling.svg)](https://travis-ci.org/ou-real/nevil-sibling)
 
 
 ##Usage
