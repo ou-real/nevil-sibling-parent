@@ -17,11 +17,12 @@ git clone https://github.com/ou-real/nevil-base.git
 The binaries will be written to build folder.
 ```bash
 cmake CMakeLists.txt <-DDEBUG=ON/OFF> <-DO=ON/OFF> <-DGUI=ON/OFF> 
-# DDEBUG is ON by default.
-# DO is OFF by default. This flag enables O3 optimization and turns off assertions.
-# DGUI is OFF by default.
 make
 ```
+Options:
+* DDEBUG: for enabling debug mode. This value is ON by default.
+* DO: This flag enables O3 optimization and turns off assertions. This value is OFF by default.
+* DGUI: For enabling GUI (disables multithreading). This value is OFF by default.
 
 
 ###Adding Experiments 

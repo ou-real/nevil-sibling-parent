@@ -14,7 +14,7 @@ elseif(O)
   add_definitions(-O3)
   add_definitions(-DNDEBUG)
 endif(DEBUG)
-add_definitions(-std=c++0x)
+add_definitions(-std=gnu++11)
 
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)

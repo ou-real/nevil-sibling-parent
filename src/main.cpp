@@ -1,6 +1,5 @@
 #include "nevil/util/system.hpp"
 #include "nevil/util/parser.hpp"
-#include <chrono>
 
 // Default output path
 const std::string DEFAULT_OUTPUT_PATH = "results";
