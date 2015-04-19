@@ -64,13 +64,11 @@ Example
 ```bash
 ./nevil -tn 1 -ps 80 -sn true -xn TestTrial -ms 1000 -mg 200
 ```
-
 ###Sibling Experiment
 ####Experiment arguments
 * `sn`:
 * `mr`:
 * `br`:
-
 
 ##Dependencies
 * [GCC](https://gcc.gnu.org) or [Clang](http://clang.llvm.org)
@@ -107,7 +105,7 @@ sudo apt-get install build-essential
 sudo apt-get install cmake
 sudo apt-get install git-core
 sudo apt-get install libqt4-core libqt4-dev libqt4-gui qt4-dev-tools
-sudo apt-get install freeglut3 freeglut3-dev #(Not sure these are necessary)
+sudo apt-get install freeglut3 freeglut3-dev
 ```
 ##Structure
     nevil-sibling
