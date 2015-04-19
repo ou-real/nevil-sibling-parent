@@ -1,5 +1,6 @@
 #include "nevil/util/system.hpp"
 #include "nevil/util/parser.hpp"
+#include <chrono>
 
 // Default output path
 const std::string DEFAULT_OUTPUT_PATH = "results";
@@ -38,11 +39,18 @@ int main(int argc, char *argv[])
 */
 int main(int argc, char *argv[])
 {
+  std::chrono::time_point<std::chrono::system_clock> start, end;
+  start = std::chrono::system_clock::now();
+
   using namespace nevil;
 
   args cl_args = parser::parse_cl_args(argc, argv);
   set_output_path(cl_args);
   parallel::simulator(cl_args);
+
+  end = std::chrono::system_clock::now();
+  std::chrono::duration<double> elapsed_time = end - start;
+  std::cout << "elapsed time: " << elapsed_time.count() / 60.0 << std::endl;
   return 0;
 }
 
