@@ -25,23 +25,28 @@ size_t nevil::test_population::size() const
 
 nevil::test_individual nevil::test_population::next_generation()
 {
-  //sort part
-  std::sort(_individual_list.begin(), _individual_list.end(), [](nevil::test_individual *a, nevil::test_individual *b) {
-    return (*b) < (*a);
-  });
 
-  nevil::test_individual best_individual(*_individual_list[0]);
+  // Selecting 
+  std::vector<int> selected_indices = nevil::evolution::tournament_selection(_individual_list.begin(), _individual_list.end(), _population_size, _bracket_size);
+  std::vector<nevil::test_individual *> new_individuals(_population_size);
 
-  // tournament part
-  auto selected_individuals = nevil::evolution::tournament_selection(_individual_list, _population_size, _bracket_size);
-
+  nevil::test_individual* max_individual = _individual_list[0];
   for (int i = 0; i < _population_size; ++i)
   {
-    delete _individual_list[i];
-    _individual_list[i] = selected_individuals[i]->clone();
-    _individual_list[i]->mutate(_mutation_rate);
-    delete selected_individuals[i];
+    if ((*max_individual) < (*_individual_list[i]))
+      max_individual = _individual_list[i];
+
+    new_individuals[i] = _individual_list[selected_indices[i]]->clone();
+    new_individuals[i]->mutate(_mutation_rate);
   }
+
+  nevil::test_individual best_individual(*max_individual);
+  // Deleting the old individuals
+  for (auto i : _individual_list)
+    delete i;
+
+  _individual_list = new_individuals;
+
   return best_individual;
 }
 
