@@ -34,16 +34,23 @@ void nevil::parallel::simulator(nevil::args &cl_args)
   if ((it = cl_args.find("rs")) != cl_args.end())
     seeded_trial = true;
 
-  // Don't spawn threads if the number of threads is 1
-  // Or Seed is provided
-  if (num_threads == 1 || seeded_trial)
+  // Run only one experiment if seed is provided
+  if (seeded_trial)
   {
-    unsigned seed = rand();
-    if (seeded_trial)
-      seed = std::stoll(cl_args["rs"]);
-
+    unsigned seed = std::stoll(cl_args["rs"]);
     trial_controller controller (1, seed, cl_args);
     controller.run();
+    return;
+  }
+
+  // Don't spawn threads if the number of threads is 1
+  if (num_threads == 1)
+  {
+    for (int i = 1; i <= num_trials; ++i)
+    {
+      trial_controller controller (i, rand(), cl_args);
+      controller.run();
+    }
     return;
   }
 
