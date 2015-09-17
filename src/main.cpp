@@ -8,24 +8,18 @@ void set_output_path(nevil::args &cl_args);
 
 #ifdef GUI
 #include <QApplication>
-#include "nevil/gui/view.hpp"
-#include "nevil/trial_controller.hpp"
+#include "nevil/gui/gui_simulator.hpp"
 
 /**
 * Main for GUI simulator
 */
 int main(int argc, char *argv[])
 {
-
   using namespace nevil;
-
   QApplication app(argc, argv);
   args cl_args = parser::parse_cl_args(argc, argv);
   set_output_path(cl_args);
-
-  srand(time(0));
-  trial_controller controller (1, rand(), cl_args);
-  controller.run();
+  nevil::gui_simulator simulator(cl_args);
 
   return app.exec();
 }
@@ -39,10 +33,11 @@ int main(int argc, char *argv[])
 */
 int main(int argc, char *argv[])
 {
+  using namespace nevil;
+  
+  srand(time(NULL));
   std::chrono::time_point<std::chrono::system_clock> start, end;
   start = std::chrono::system_clock::now();
-
-  using namespace nevil;
 
   args cl_args = parser::parse_cl_args(argc, argv);
   set_output_path(cl_args);
