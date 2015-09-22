@@ -34,30 +34,42 @@ size_t nevil::sibling_population::size() const
 nevil::sibling_individual nevil::sibling_population::next_generation()
 {
   //sort part
-  std::sort(_individual_list.begin(), _individual_list.end(), [](nevil::sibling_individual *a, nevil::sibling_individual *b) {
-    return (*b) < (*a);
-  });
-
-  nevil::sibling_individual best_individual(*_individual_list[0]);
+  // std::sort(_individual_list.begin(), _individual_list.end(), [](nevil::sibling_individual *a, nevil::sibling_individual *b) {
+  //   return (*b) < (*a);
+  // });
 
   // tournament part
-  auto selected_individuals = nevil::evolution::tournament_selection(_individual_list, _population_size, _bracket_size);
+  auto selected_individuals = nevil::evolution::tournament_selection(_individual_list.begin(), _individual_list.end(), _population_size, _bracket_size);
+  nevil::sibling_individual* max_individual = _individual_list[0];
+  std::vector<nevil::sibling_individual *> new_individuals(2 * _population_size);
 
   for (int i = 0; i < _population_size; ++i)
   {
-    delete _individual_list[i];
-    _individual_list[i] = selected_individuals[i]->clone(true);
-    _individual_list[i]->set_id(_individual_counter);
-    _individual_list[i]->mutate(_mutation_rate);
+    // Finding the best individual
+    if ((*_individual_list[i]) > (*max_individual))
+      max_individual = _individual_list[i];
 
-    delete _individual_list[i + _population_size];
-    _individual_list[i + _population_size] = selected_individuals[i]->clone(false);
-    _individual_list[i + _population_size]->set_id(_individual_counter);
-    _individual_list[i + _population_size]->mutate(_mutation_rate);
+    new_individuals[i] = _individual_list[selected_individuals[i]]->clone(true);
+    new_individuals[i]->set_id(_individual_counter);
+    new_individuals[i]->mutate(_mutation_rate);
 
-    delete selected_individuals[i];
+
+    // Finding the best individual
+    if ((*_individual_list[i + _population_size]) > (*max_individual))
+      max_individual = _individual_list[i + _population_size];
+
+    new_individuals[i + _population_size] = _individual_list[selected_individuals[i]]->clone(false);
+    new_individuals[i + _population_size]->set_id(_individual_counter);
+    new_individuals[i + _population_size]->mutate(_mutation_rate);
+
     ++_individual_counter;
   }
+
+  nevil::sibling_individual best_individual(*max_individual);
+  for (auto i : _individual_list)
+    delete i;
+
+  _individual_list = new_individuals;
 
   return best_individual;
 }

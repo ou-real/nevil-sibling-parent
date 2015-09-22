@@ -82,12 +82,12 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   // Instantiating a controller
   // If you have more than one controller you can use the controller name to instantiate the right one
   _trial = new nevil::sibling_trial(cl_args);
-  #ifdef GUI
-    _viewer = new nevil::view(_trial->get_trial_world());
-    _viewer->show();
-  #endif
 
+  _current_generation = 0;
+  _current_individual = 0;
+  _current_step = 0;
   printf("-Trial %d: starting\n", _trial_id);
+  printf("-Trial %d: running generation %d\n", _trial_id, _current_generation);
 }
 
 nevil::trial_controller::~trial_controller() 
@@ -100,39 +100,41 @@ Enki::World *nevil::trial_controller::get_trial_world()
   return _trial->get_trial_world();
 }
 
-void nevil::trial_controller::run()
+bool nevil::trial_controller::run()
 {
-  for (_current_generation = 0;  _current_generation < _max_generation_num; ++_current_generation)
+  if (_current_generation < _max_generation_num)
   {
-    _simulate();
-    _evaluate();
+    if (_current_individual < _population_size)
+    {
+      if (_current_step == 0 && _current_individual != _population_size)
+        _trial->reset();
+
+      if (_current_step < _max_step_num)
+      {
+        _trial->update();
+        ++_current_step;
+      }
+      else
+      {
+        ++_current_individual;
+        _current_step = 0;
+      }
+    }
+    else
+    {
+      _evaluate();
+      ++_current_generation;
+      _current_individual = 0;
+      _current_step = 0;
+      printf("-Trial %d: running generation %d\n", _trial_id, _current_generation);
+    }
+    return true;
   }
+
   _end();
+  return false;
 }
 
-void nevil::trial_controller::_simulate()
-{
-  printf("-Trial %d: running generation %d\n", _trial_id, _current_generation);
-  int _frame_number = 0;
-  for (int i = 0; i < _population_size; ++i)
-  {
-    _trial->reset();
-    // Run the simulation for _max_step_num of steps
-    for (int current_step = 0; current_step < _max_step_num; ++current_step)
-    {
-      #ifdef GUI
-        if(_frame_number == 10)
-        {
-          _viewer->update();
-          _frame_number = -1;
-        }
-        ++_frame_number;
-      #endif
-      
-      _trial->update();
-    }
-  }
-}
 
 void nevil::trial_controller::_evaluate()
 {

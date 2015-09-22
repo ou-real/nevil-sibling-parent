@@ -51,11 +51,10 @@ JSON Example:
 ```javascript
 {
   "tn": 1,
-  "sn": true, 
   "mg": 200,
   "xn": "TestTrial",
   "ms": 1000,
-  "ps": 80,
+  "ps": 80
 }
 ```
 ##### Specifying using command line

@@ -4,8 +4,6 @@ void nevil::parallel::simulator(nevil::args &cl_args)
 {
   using namespace nevil;
   using namespace nevil::parallel;
-
-  srand(time(NULL));
   
   // Default values
   int num_threads = os::get_num_processors() - 1;
@@ -29,21 +27,27 @@ void nevil::parallel::simulator(nevil::args &cl_args)
 
   // Don't spawn more threads than number of trials
   num_threads = std::min(num_threads, num_trials);
-
-  // If the seed is provided, only run one trial with that seed
+  
   if ((it = cl_args.find("rs")) != cl_args.end())
     seeded_trial = true;
 
+  // If the seed is provided, only run one trial with that seed
   // Don't spawn threads if the number of threads is 1
-  // Or Seed is provided
-  if (num_threads == 1 || seeded_trial)
+  if (seeded_trial || num_threads == 1)
   {
     unsigned seed = rand();
     if (seeded_trial)
+    {
       seed = std::stoll(cl_args["rs"]);
+      // Run only one experiment if seed is provided
+      num_trials = 1;
+    }
 
-    trial_controller controller (1, seed, cl_args);
-    controller.run();
+    for (int i = 1; i <= num_trials; ++i)
+    {
+      trial_controller controller (i, seed, cl_args);
+      while (controller.run());
+    }
     return;
   }
 
@@ -74,7 +78,7 @@ void nevil::parallel::_run_trial(nevil::args cl_args, size_t start_id, size_t en
   for (int i = start_id; i < end_id; ++i)
   {
     nevil::trial_controller controller (i, rand(), cl_args);
-    controller.run();
+    while (controller.run());
   }
 }
 
