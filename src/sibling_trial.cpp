@@ -57,11 +57,11 @@ nevil::sibling_individual nevil::sibling_trial::get_best_individual() const
   return _best_individual;
 }
 
-std::string nevil::sibling_trial::get_generation_data()
+Json::Value nevil::sibling_trial::get_generation_data()
 {
-  std::string generation_info;
-  for (int i = 0; i < _population.size() - 1; ++i)
-    generation_info = generation_info + _population[i]->str() + ", ";
+  Json::Value generation_info (Json::arrayValue);
+  for (int i = 0; i < _population.size(); ++i)
+    generation_info.append(_population[i]->json());
 
-  return generation_info + _population[_population.size() - 1]->str();
+  return generation_info;
 }

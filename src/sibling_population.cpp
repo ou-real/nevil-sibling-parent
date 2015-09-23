@@ -33,11 +33,6 @@ size_t nevil::sibling_population::size() const
 
 nevil::sibling_individual nevil::sibling_population::next_generation()
 {
-  //sort part
-  // std::sort(_individual_list.begin(), _individual_list.end(), [](nevil::sibling_individual *a, nevil::sibling_individual *b) {
-  //   return (*b) < (*a);
-  // });
-
   // tournament part
   auto selected_individuals = nevil::evolution::tournament_selection(_individual_list.begin(), _individual_list.end(), _population_size, _bracket_size);
   nevil::sibling_individual* max_individual = _individual_list[0];

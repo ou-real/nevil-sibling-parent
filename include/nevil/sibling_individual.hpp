@@ -1,9 +1,11 @@
 #ifndef _NAME_SIBLING_INDIVIDUAL_HPP_
 #define _NAME_SIBLING_INDIVIDUAL_HPP_
 
+#include <string>
+#include <json/json.h>
+
 #include "individual.hpp"
 #include "nevil/util/random.hpp"
-#include <string>
 
 namespace nevil
 {
@@ -22,6 +24,7 @@ namespace nevil
     const std::string &get_uuid() const;
     const std::string &get_parent_uuid() const;
     std::string str() const;
+    Json::Value json() const;
     bool is_a() const;
     bool turn_on_light() const;
     bool gained_fitness() const;

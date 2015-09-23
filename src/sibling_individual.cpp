@@ -58,6 +58,17 @@ std::string nevil::sibling_individual::str() const
   return _parent_uuid + ":" + _uuid + ":S=" + (_turned_on_light ? "1" : "0") + ":L=" + (_gained_fitness ? "1" : "0") + ":" +std::to_string(_fitness);
 }
 
+Json::Value nevil::sibling_individual::json() const
+{
+  Json::Value data;
+  data["parentUUID"] = _parent_uuid;
+  data["UUID"] = _uuid;
+  data["switch"] = _turned_on_light;
+  data["light"] = _gained_fitness;
+  data["fitness"] = _fitness;
+  return data;
+}
+
 void nevil::sibling_individual::set_id(int id)
 {
   _uuid = std::to_string(id) + (_is_sibling_a ? "A" : "B");
