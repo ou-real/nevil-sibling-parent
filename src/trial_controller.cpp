@@ -57,10 +57,14 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
     cl_args["mr"] = std::to_string(mutation_rate);
 
   // Creating a log file
-  std::string file_name = "Trial_" + std::to_string(_trial_id) + ".txt";
-  _trial_logger.start_new_file(cl_args["xp_path"], file_name);
+  // Logging into a text file example
+  _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".txt");
+  // Logging json example
+  _trial_json_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
+  _generational_data = Json::Value(Json::arrayValue);
 
   // Output arguments to file
+  // Text style
   _trial_logger << "==Controller Config==" << std::endl;
   _trial_logger << "-Random seed: " << seed << std::endl;
   _trial_logger << "-Number of generations: " << _max_generation_num << std::endl;
@@ -68,9 +72,17 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _trial_logger << "==Trial config==" << std::endl;
   _trial_logger << "-Name: " << trial_name << std::endl;
   _trial_logger << "-Population size: " << _population_size << std::endl;
-  _trial_logger << "-Bracket Ratio: " << bracket_ratio << " (" << (_population_size * bracket_ratio) << ")" << std::endl;
+  _trial_logger << "-Bracket Ratio: " << bracket_ratio << std::endl;
   _trial_logger << "-Mutation Rate: " << mutation_rate << std::endl;
   _trial_logger << "==Starting Trial==" << std::endl;
+
+  // JSON style
+  _root["config"]["controller"]["randomSeed"] = seed;
+  _root["config"]["controller"]["numberOfGenerations"] = _max_generation_num;
+  _root["config"]["controller"]["numberOfTimesteps"] = _max_step_num;
+  _root["config"]["trial"]["populationSize"] = trial_name;
+  _root["config"]["trial"]["bracketRatio"] = bracket_ratio;
+  _root["config"]["trial"]["mutationRate"] = mutation_rate;
 
   // Instantiating a controller
   // If you have more than one controller you can use the controller name to instantiate the right one
@@ -132,13 +144,32 @@ bool nevil::trial_controller::run()
 void nevil::trial_controller::_evaluate()
 {
   _trial->epoch();
+  // Text logging
   _trial_logger << _current_generation << "\t" << _trial->get_best_individual().get_fitness() << std::endl;
+
+  //JSON logging
+  Json::Value data;
+  data["generationNumber"] = _current_generation;
+  data["maxFitness"] = _trial->get_best_individual().get_fitness();
+  _generational_data.append(data);
 }
 
 void nevil::trial_controller::_end()
 {
   printf("-Trial %d: finished\n", _trial_id);
+  //Text logging
   _trial_logger << "==Trial Ended==" << std::endl;
   _trial_logger << "Best chromosome " << _trial->get_best_individual().get_chromosome() << std::endl;
   _trial_logger.close_file();
+
+  //JSON logging
+  Json::Value best_chromosome (Json::arrayValue);
+  auto best_chromosome_vec = _trial->get_best_individual().get_chromosome();
+  for (int i = 0; i < best_chromosome_vec.size(); ++i)
+    best_chromosome.append(best_chromosome_vec[i]);
+
+  _root["generationalData"] = _generational_data;
+  _root["bestChromosome"] = best_chromosome;
+  _trial_json_logger.write(_root);
+  _trial_json_logger.close_file();
 }

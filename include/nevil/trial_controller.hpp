@@ -5,9 +5,11 @@
 #include <string>
 #include <time.h>
 #include <enki/Types.h>
+#include <json/json.h>
 
 #include "test_trial.hpp"
 #include "util/logger.hpp"
+#include "util/json_logger.hpp"
 #include "util/parser.hpp"
 
 namespace nevil
@@ -29,6 +31,9 @@ namespace nevil
 
     nevil::test_trial *_trial;
     nevil::logger _trial_logger;
+    nevil::json_logger _trial_json_logger;
+    Json::Value _root;
+    Json::Value _generational_data;
     int _trial_id;
 
     //simulation variables
