@@ -11,7 +11,7 @@ namespace nevil
   class test_robot : public robot
   {
   public:
-    test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color);
+    test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color, double max_speed);
     virtual ~test_robot();
 
     bool update(const std::vector<object *> &objects);

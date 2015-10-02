@@ -1,7 +1,7 @@
 #include "nevil/test_robot.hpp"
 
-nevil::test_robot::test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color)
-: robot(x, y, angle, robot_name, color)
+nevil::test_robot::test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color, double max_speed)
+: robot(x, y, angle, robot_name, color, max_speed)
 {
   _neural_network = nevil::basic_feedforward_nn(19, 2);
 }
@@ -26,6 +26,6 @@ bool nevil::test_robot::update(const std::vector<object *> &objects)
   // Evaluate the neural network
   std::vector <double> output = _neural_network.update(inputs);
   // Pass the output of each NN and convert it to motor velocities
-  _set_wheels_speed(output);
+  _set_wheels_speed(output[0], output[1]);
   return true;
 }
