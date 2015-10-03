@@ -1,7 +1,7 @@
 #include "nevil/test_robot.hpp"
 
-nevil::test_robot::test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color, double max_speed)
-: robot(x, y, angle, robot_name, color, max_speed)
+nevil::test_robot::test_robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color)
+: robot(x, y, angle, robot_name, color)
 {
   _neural_network = nevil::basic_feedforward_nn(19, 2);
 }

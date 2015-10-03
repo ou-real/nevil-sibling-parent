@@ -5,13 +5,14 @@ nevil::robot::robot()
 
 nevil::robot::robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color, double max_speed)
   : Enki::EPuck(EPuck::CAPABILITY_CAMERA)
-  , _initial_angle(angle)
+  , _initial_angle(angle * M_PI)
   , _initial_position(Enki::Point(x, y))
+  , _max_speed(max_speed)
   , _robot_name(robot_name)
 {
   if (max_speed > 12.8)
     std::cout << "Warning the max speed of Epuck is 12.8." << std::endl;
-  _max_speed = max_speed;
+
   setColor(color);
   reset_position();
 }

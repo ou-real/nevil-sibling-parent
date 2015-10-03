@@ -34,8 +34,7 @@ nevil::test_arena::test_arena(int world_size_x, int world_size_y,const Enki::Col
     , world_size_y / 2.0
     , INITIAL_DEGREE
     , "TestRobot"
-    , Enki::Color(0.5, 0.0, 0.0)
-    , 1));
+    , Enki::Color(0.5, 0.0, 0.0)));
 }
 
 nevil::test_arena::~test_arena() {}
