@@ -20,7 +20,7 @@ nevil::view::~view() {}
 void nevil::view::timerEvent(QTimerEvent *event)
 {
   if (!_controller->run())
-    exit(0);
+    QApplication::quit();
 
   if (_pause_gui)
     return;

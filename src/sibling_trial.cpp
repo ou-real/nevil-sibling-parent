@@ -12,8 +12,12 @@ nevil::sibling_trial::sibling_trial(nevil::args &cl_args)
   bool sibling_neuron = (cl_args["sn"] == "true");
   float bracket_ratio = std::stof(cl_args["br"]);
   float mutation_rate = std::stof(cl_args["mr"]);
+  double speed_A = std::stod(cl_args["speedA"]);
+  double speed_B = std::stod(cl_args["speedB"]);
+  double agnle_B = std::stod(cl_args["angleA"]);
+  double angle_B = std::stod(cl_args["angleB"]);
 
-  _trial_arena = new nevil::sibling_arena(WORLD_SIZE_X, WORLD_SIZE_Y, sibling_neuron);
+  _trial_arena = new nevil::sibling_arena(WORLD_SIZE_X, WORLD_SIZE_Y, sibling_neuron, speed_A, speed_B, agnle_B, angle_B);
   _population = nevil::sibling_population(_population_size, sibling_neuron, bracket_ratio, mutation_rate);
   _current_index = 0;
 }

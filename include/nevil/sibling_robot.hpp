@@ -11,7 +11,7 @@ namespace nevil
   class sibling_robot : public robot
   {
   public:
-    sibling_robot(double x, double y, double angle, bool _sibling_nn ,const std::string &robot_name, const Enki::Color &color);
+    sibling_robot(double x, double y, double angle, bool sibling_nn, double max_speed, const std::string &robot_name, const Enki::Color &color);
     virtual ~sibling_robot();
 
     bool update(const std::vector<object *> &objects);

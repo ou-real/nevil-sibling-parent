@@ -1,7 +1,7 @@
 #include "nevil/sibling_robot.hpp"
 
-nevil::sibling_robot::sibling_robot(double x, double y, double angle, bool sibling_nn ,const std::string &robot_name, const Enki::Color &color)
-: robot(x, y, angle, robot_name, color)
+nevil::sibling_robot::sibling_robot(double x, double y, double angle, bool sibling_nn, double max_speed, const std::string &robot_name, const Enki::Color &color)
+: robot(x, y, angle, robot_name, color, max_speed)
 , _sibling_neuron(sibling_nn)
 {
   _neural_network = nevil::basic_feedforward_nn(_sibling_neuron ? 21 : 19, 2);
@@ -52,6 +52,6 @@ bool nevil::sibling_robot::update(const std::vector<object *> &objects)
   // Evaluate the neural network
   std::vector <double> output = _neural_network.update(inputs);
   // Pass the output of each NN and convert it to motor velocities
-  _set_wheels_speed(output);
+  _set_wheels_speed(output[0], output[1]);
   return true;
 }

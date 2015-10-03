@@ -11,10 +11,9 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _population_size = 80;
   _max_generation_num = 200;
   _max_step_num = 1000;
-  std::string trial_name = "SiblingTrial";
-  bool sibling_neuron = false;
+  std::string trial_name = "SiblingNeuronTrial";
   float mutation_rate = 0.25;
-  float bracket_ratio = 0.1;
+  float bracket_ratio = 0.10;
 
   // Reading the command line arguments
   nevil::args::const_iterator it;
@@ -27,11 +26,6 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
 
   if ((it = cl_args.find("ms")) != cl_args.end())
     _max_step_num = stoi(it->second);
-
-  if ((it = cl_args.find("sn")) != cl_args.end())
-    sibling_neuron = (it->second == "true");
-  else
-    cl_args["sn"] = (sibling_neuron ? "true":"false");
 
   if ((it = cl_args.find("ps")) != cl_args.end())
     _population_size = stoi(it->second);
@@ -62,6 +56,35 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   else
     cl_args["mr"] = std::to_string(mutation_rate);
 
+
+  // Sibling Neuron Parameter
+  if ((it = cl_args.find("sn")) != cl_args.end())
+    _root["config"]["trial"]["siblingNeuron"] = (it->second == "true");
+  else
+    cl_args["sn"] = "false";
+
+  //Speed Parameter
+  if ((it = cl_args.find("speedA")) != cl_args.end())
+    _root["config"]["trial"]["speedA"] = std::stod(it->second);
+  else
+    cl_args["speedA"] = "12";
+
+  if ((it = cl_args.find("speedB")) != cl_args.end())
+    _root["config"]["trial"]["speedB"] = std::stod(it->second);
+  else
+    cl_args["speedB"] = "12";
+
+  //Angle Parameter
+  if ((it = cl_args.find("angleA")) != cl_args.end())
+    _root["config"]["trial"]["angleA"] = std::stod(it->second);
+  else
+    cl_args["angleA"] = "0";
+
+  if ((it = cl_args.find("angleB")) != cl_args.end())
+    _root["config"]["trial"]["angleB"] = std::stod(it->second);
+  else
+    cl_args["angleB"] = "0";
+
   // Creating a log file
   _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
   _generational_data = Json::Value(Json::arrayValue);
@@ -70,13 +93,31 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _root["config"]["controller"]["numberOfGenerations"] = _max_generation_num;
   _root["config"]["controller"]["numberOfTimesteps"] = _max_step_num;
   _root["config"]["trial"]["populationSize"] = trial_name;
-  _root["config"]["trial"]["siblingNeuron"] = sibling_neuron;
   _root["config"]["trial"]["bracketRatio"] = bracket_ratio;
   _root["config"]["trial"]["mutationRate"] = mutation_rate;
 
-  // Instantiating a controller
-  // If you have more than one controller you can use the controller name to instantiate the right one
-  _trial = new nevil::sibling_trial(cl_args);
+  // Instantiating a trial
+  if (trial_name == "SiblingNeuronTrial")
+  { 
+    cl_args["angleA"] = "0";
+    cl_args["angleB"] = "0";
+    _trial = new nevil::sibling_trial(cl_args);
+  }
+  else if (trial_name == "SiblingAsymTrial")
+  {
+    cl_args["sn"] = "false";
+    _trial = new nevil::sibling_trial(cl_args); // Change this
+  }
+  else if (trial_name == "SiblingDetectionTrial")
+  {
+    cl_args["sn"] = "false";
+    _trial = new nevil::sibling_trial(cl_args); // Change this
+  }
+  else
+  {
+    printf("Trial '%s' is not defined.\nTerminating...\n", trial_name.c_str());
+    exit(1);
+  }
 
   _current_generation = 0;
   _current_individual = 0;

@@ -3,12 +3,15 @@
 nevil::robot::robot()
   : Enki::EPuck(EPuck::CAPABILITY_CAMERA) {}
 
-nevil::robot::robot(double x, double y, double angle, const std::string &robot_name, const Enki::Color &color)
+nevil::robot::robot(double x, double y, double angle ,const std::string &robot_name, const Enki::Color &color, double max_speed)
   : Enki::EPuck(EPuck::CAPABILITY_CAMERA)
   , _initial_angle(angle)
   , _initial_position(Enki::Point(x, y))
   , _robot_name(robot_name)
 {
+  if (max_speed > 12.8)
+    std::cout << "Warning the max speed of Epuck is 12.8." << std::endl;
+  _max_speed = max_speed;
   setColor(color);
   reset_position();
 }
@@ -17,10 +20,10 @@ nevil::robot::~robot() {}
 
 void nevil::robot::reset_position()
 {
-  this->leftSpeed = 0;
-  this->rightSpeed = 0;
-  this->pos = _initial_position;
-  this->angle = _initial_angle;
+  leftSpeed = 0;
+  rightSpeed = 0;
+  pos = _initial_position;
+  angle = _initial_angle;
 }
 
 /*
@@ -66,10 +69,20 @@ const std::vector<double> nevil::robot::_get_sensor_inputs()
   return sensor_counter;
 }
 
-void nevil::robot::_set_wheels_speed(const std::vector<double> &outputs)
+double nevil::robot::_clamp(double val, double min, double max)
 {
-  this->leftSpeed = (int)outputs[0];
-  this->rightSpeed = (int)outputs[1];
+  if (val < min)
+    return min;
+  else if (val > max)
+    return max;
+  else
+    return val;
+}
+
+void nevil::robot::_set_wheels_speed(double left, double right)
+{
+  leftSpeed = _clamp(left, -1 * _max_speed, _max_speed);
+  rightSpeed = _clamp(right, -1 * _max_speed, _max_speed);
 }
 
 bool nevil::robot::is_at_switch() const
