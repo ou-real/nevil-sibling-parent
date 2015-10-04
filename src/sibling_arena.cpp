@@ -54,9 +54,6 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_HEIGHT
     , MASS));
 
-  std::cout << "speed_A " << speed_A << std::endl;
-  std::cout << "speed_B " << speed_B << std::endl;
-
   //--robots--
   // Create a robot named A
   _add_robot(new nevil::sibling_robot(world_size_x / 4.0
