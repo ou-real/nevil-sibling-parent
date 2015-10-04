@@ -1,0 +1,6 @@
+#!/bin/sh
+
+./neuron
+./disability
+./symmetry
+./detection

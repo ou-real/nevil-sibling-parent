@@ -1,0 +1,11 @@
+#!/bin/sh
+
+cd ../build;
+
+for i in `seq 0 5`; do
+    LOW=$((6 - i))
+    HIGH=$((6 + i))
+    ./nevil -xp_path speed_$HIGH-$LOW -tn 0 -xn SiblingNeuronTrial -sn true -speedA $HIGH -speedB $LOW
+done 
+    
+    
