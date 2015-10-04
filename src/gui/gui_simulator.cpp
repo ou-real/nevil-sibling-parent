@@ -14,6 +14,6 @@ nevil::gui_simulator::gui_simulator(nevil::args &cl_args)
 
 nevil::gui_simulator::~gui_simulator()
 {
-  delete _controller;
   delete _view;
+  delete _controller;
 }
