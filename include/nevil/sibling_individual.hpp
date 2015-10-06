@@ -23,17 +23,16 @@ namespace nevil
     
     const std::string &get_uuid() const;
     const std::string &get_parent_uuid() const;
-    std::string str() const;
     Json::Value json() const;
     bool is_a() const;
-    bool turn_on_light() const;
-    bool gained_fitness() const;
+    bool turned_on_swich() const;
+    bool went_light_first() const;
     nevil::sibling_individual &operator=(const nevil::sibling_individual &rhs);
 
     void increase_fitness(int fitness);
     void set_id(int id);
-    void set_turn_on_light(bool);
-    void set_gained_fitness(bool);
+    void set_turned_on_swich();
+    void set_went_light_first();
 
   protected:
     sibling_individual* clone() const;
@@ -41,9 +40,9 @@ namespace nevil
     // Indicates whether this is sibling A or not (sibling B)
     bool _is_sibling_a;
     // Indicates whether this individual activated the switch in a given trial
-    bool _turned_on_light;
-    // Indicates whether this individual gained fitness.
-    bool _gained_fitness;
+    bool _turned_on_switch;
+    // Indicates whether this individual went to light first.
+    bool _light_first;
     // Unique identifier for each sibling followed by A or B.
     std::string _uuid;
     // Parent's uuid.

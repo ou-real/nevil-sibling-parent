@@ -85,15 +85,20 @@ void nevil::sibling_arena::set_individuals(sibling_individual *sibling_a, siblin
 bool nevil::sibling_arena::update()
 {
   // Updating the environment
+  // Turning the switches and lights on based on the position of the robots
   for (auto r : _robot_vector)
   {
-    // Turning the switches and lights on based on the position of the robots
     if(r->is_at_switch())
     {
-      // Turn on everything
-      for (auto o : _object_vector)
-        o->turn_on();
-      break; // Don't need to check the other robots
+      // Turn on the lights
+      _object_vector[1]->turn_on();
+      _object_vector[3]->turn_on();
+
+      // Only turn on the switch on your side
+      if (r->get_name() == "A")
+        _object_vector[0]->turn_on();
+      else
+        _object_vector[2]->turn_on();
     }
   }
 

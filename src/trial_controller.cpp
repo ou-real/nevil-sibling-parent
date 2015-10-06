@@ -59,29 +59,29 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
 
   // Sibling Neuron Parameter
   if ((it = cl_args.find("sn")) != cl_args.end())
-    _root["config"]["trial"]["siblingNeuron"] = (it->second == "true");
+    _root["config"]["siblingNeuron"] = (it->second == "true");
   else
     cl_args["sn"] = "false";
 
   //Speed Parameter
   if ((it = cl_args.find("speedA")) != cl_args.end())
-    _root["config"]["trial"]["speedA"] = std::stod(it->second);
+    _root["config"]["speedA"] = std::stod(it->second);
   else
     cl_args["speedA"] = "12";
 
   if ((it = cl_args.find("speedB")) != cl_args.end())
-    _root["config"]["trial"]["speedB"] = std::stod(it->second);
+    _root["config"]["speedB"] = std::stod(it->second);
   else
     cl_args["speedB"] = "12";
 
   //Angle Parameter
   if ((it = cl_args.find("angleA")) != cl_args.end())
-    _root["config"]["trial"]["angleA"] = std::stod(it->second);
+    _root["config"]["angleA"] = std::stod(it->second);
   else
     cl_args["angleA"] = "0";
 
   if ((it = cl_args.find("angleB")) != cl_args.end())
-    _root["config"]["trial"]["angleB"] = std::stod(it->second);
+    _root["config"]["angleB"] = std::stod(it->second);
   else
     cl_args["angleB"] = "0";
 
@@ -89,12 +89,13 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
   _generational_data = Json::Value(Json::arrayValue);
 
-  _root["config"]["controller"]["randomSeed"] = seed;
-  _root["config"]["controller"]["numberOfGenerations"] = _max_generation_num;
-  _root["config"]["controller"]["numberOfTimesteps"] = _max_step_num;
-  _root["config"]["trial"]["populationSize"] = trial_name;
-  _root["config"]["trial"]["bracketRatio"] = bracket_ratio;
-  _root["config"]["trial"]["mutationRate"] = mutation_rate;
+  _root["config"]["randomSeed"] = seed;
+  _root["config"]["numberOfGenerations"] = _max_generation_num;
+  _root["config"]["numberOfTimesteps"] = _max_step_num;
+  _root["config"]["trialName"] = trial_name;
+  _root["config"]["populationSize"] = _population_size;
+  _root["config"]["bracketRatio"] = bracket_ratio;
+  _root["config"]["mutationRate"] = mutation_rate;
 
   // Instantiating a trial
   if (trial_name == "SiblingNeuronTrial")

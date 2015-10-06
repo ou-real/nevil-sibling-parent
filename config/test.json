@@ -1,11 +1,12 @@
 {
   "tn": 1,
+  "mt" : 1,
   "sn": true,
-  "mg": 6,
+  "rs" : 16807,
+  "mg": 60,
   "xn": "SiblingNeuronTrial",
   "ms": 1000,
-  "ps": 10,
-  "speedA" : 6,
-  "speedB" : 6,
-  "angleA" : 0,
+  "ps": 80,
+  "speedA" : 12,
+  "speedB" : 0
 }

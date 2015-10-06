@@ -15,6 +15,7 @@ nevil::sibling_population::sibling_population(size_t pop_size, bool sibling_neur
     _individual_list[i] = new nevil::sibling_individual(sibling_neurons ? 42 : 38, true);
     _individual_list[i]->set_id(_individual_counter);
     _individual_list[i + _population_size] = new nevil::sibling_individual(_individual_list[i]->get_chromosome(), false);
+    _individual_list[i + _population_size]->mutate(_mutation_rate);
     _individual_list[i + _population_size]->set_id(_individual_counter);
     ++_individual_counter;
   }
