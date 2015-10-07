@@ -65,24 +65,25 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
 
   // Output arguments to file
   // Text style
-  _trial_logger << "==Controller Config==" << std::endl;
+  _trial_logger << "==Config==" << std::endl;
+  _trial_logger << "-Name: " << trial_name << std::endl;
   _trial_logger << "-Random seed: " << seed << std::endl;
   _trial_logger << "-Number of generations: " << _max_generation_num << std::endl;
   _trial_logger << "-Number of timesteps: " << _max_step_num << std::endl;
-  _trial_logger << "==Trial config==" << std::endl;
-  _trial_logger << "-Name: " << trial_name << std::endl;
   _trial_logger << "-Population size: " << _population_size << std::endl;
   _trial_logger << "-Bracket Ratio: " << bracket_ratio << std::endl;
   _trial_logger << "-Mutation Rate: " << mutation_rate << std::endl;
   _trial_logger << "==Starting Trial==" << std::endl;
 
+  
   // JSON style
-  _root["config"]["controller"]["randomSeed"] = seed;
-  _root["config"]["controller"]["numberOfGenerations"] = _max_generation_num;
-  _root["config"]["controller"]["numberOfTimesteps"] = _max_step_num;
-  _root["config"]["trial"]["populationSize"] = trial_name;
-  _root["config"]["trial"]["bracketRatio"] = bracket_ratio;
-  _root["config"]["trial"]["mutationRate"] = mutation_rate;
+  _root["config"]["trialName"] = trial_name;
+  _root["config"]["randomSeed"] = seed;
+  _root["config"]["numberOfGenerations"] = _max_generation_num;
+  _root["config"]["numberOfTimesteps"] = _max_step_num;
+  _root["config"]["populationSize"] = _population_size;
+  _root["config"]["bracketRatio"] = bracket_ratio;
+  _root["config"]["mutationRate"] = mutation_rate;
 
   // Instantiating a controller
   // If you have more than one controller you can use the controller name to instantiate the right one
