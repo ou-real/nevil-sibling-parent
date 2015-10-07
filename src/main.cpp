@@ -16,6 +16,8 @@ void set_output_path(nevil::args &cl_args);
 int main(int argc, char *argv[])
 {
   using namespace nevil;
+
+  srand(time(NULL));
   QApplication app(argc, argv);
   args cl_args = parser::parse_cl_args(argc, argv);
   set_output_path(cl_args);
