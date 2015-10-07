@@ -70,6 +70,11 @@ const std::vector<double> nevil::robot::_get_sensor_inputs()
   return sensor_counter;
 }
 
+std::string nevil::robot::get_name() const
+{
+  return _robot_name;
+}
+
 double nevil::robot::_clamp(double val, double min, double max)
 {
   if (val < min)
