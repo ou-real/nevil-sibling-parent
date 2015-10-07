@@ -89,10 +89,11 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
   _generational_data = Json::Value(Json::arrayValue);
 
+  // JSON style
+  _root["config"]["trialName"] = trial_name;
   _root["config"]["randomSeed"] = seed;
   _root["config"]["numberOfGenerations"] = _max_generation_num;
   _root["config"]["numberOfTimesteps"] = _max_step_num;
-  _root["config"]["trialName"] = trial_name;
   _root["config"]["populationSize"] = _population_size;
   _root["config"]["bracketRatio"] = bracket_ratio;
   _root["config"]["mutationRate"] = mutation_rate;
