@@ -47,12 +47,14 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , 0.01));
   
   //Wall in the middle of the field
+  /*
   _add_object(new nevil::wall(world_size_x / 2.0
     , world_size_y / 2.0
     , 0.01
     , world_size_y
     , OBJECT_HEIGHT
     , MASS));
+	*/
 
   //--robots--
   // Create a robot named A
@@ -72,6 +74,14 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , speed_B
     , "B"
     , Enki::Color(0.0, 0.5, 0.0)));
+
+  // _add_robot(new nevil::parent_robot(world_size_x * (1 / 2.0)
+	 //  , world_size_y / 2.0
+	 //  , 0
+	 //  , _sibling_neuron
+	 //  , speed_B
+	 //  , "B"
+	 //  , Enki::Color(0.5, 0.0, 0.0)));
 }
 
 nevil::sibling_arena::~sibling_arena() {}
