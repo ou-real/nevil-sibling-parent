@@ -8,25 +8,20 @@ nevil::test_arena::test_arena(int world_size_x, int world_size_y,const Enki::Col
   const double OBJECT_SIZE_Y = 0.1;
   const double OBJECT_HEIGHT = 7;
   const double INITIAL_DEGREE = 0;
-  const double MASS = -1;
 
   //switch A
   _add_object(new nevil::switch_object(world_size_x / 2.0
     , world_size_y
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
-    , OBJECT_HEIGHT
-    , MASS
-    , 1));
+    , OBJECT_HEIGHT));
 
     //light A
   _add_object(new nevil::light(world_size_x / 2.0
     , 0
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
-    , OBJECT_HEIGHT
-    , MASS
-    , 0.01));
+    , OBJECT_HEIGHT));
   
   //--robots--
   // Create a robot named MyRobot with 0 degree angle
