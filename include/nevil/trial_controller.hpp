@@ -7,7 +7,7 @@
 #include <enki/Types.h>
 #include <json/json.h>
 
-#include "test_trial.hpp"
+#include "sibling_trial.hpp"
 #include "util/logger.hpp"
 #include "util/json_logger.hpp"
 #include "util/parser.hpp"
@@ -29,9 +29,8 @@ namespace nevil
     void _evaluate();
     void _end();
 
-    nevil::test_trial *_trial;
-    nevil::logger _trial_logger;
-    nevil::json_logger _trial_json_logger;
+    nevil::sibling_trial *_trial;
+    nevil::json_logger _trial_logger;
     Json::Value _root;
     Json::Value _generational_data;
     int _trial_id;

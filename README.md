@@ -1,12 +1,10 @@
-#NEVIL: Nurturing and EVolution of Intelligence and Learning [![Build Status](https://travis-ci.org/ou-real/nevil-base.svg?branch=master)](https://travis-ci.org/ou-real/nevil-base)
-This the base project for NEVIL light-switch based nurturing experiments. This project provides libraries and base classes for different experiments to be build upon.
+#NEVIL: Sibling Experiment [![Build Status](https://travis-ci.org/ou-real/nevil-sibling.svg)](https://travis-ci.org/ou-real/nevil-sibling)
 
-This repository is meant to be forked and extended for different experiments.
 
 ##Usage
 You can clone this repository by running:
 ```bash
-git clone https://github.com/ou-real/nevil-base.git
+git clone https://github.com/ou-real/nevil-sibling.git
 ```
 
 ###Compilation/Install
@@ -65,35 +63,11 @@ Example
 ```bash
 ./nevil -tn 1 -ps 80 -sn true -xn TestTrial -ms 1000 -mg 200
 ```
-
-###Adding Experiments
-First you need to create a repository under the ou-real organization and name it nevil-<your-experiment-name>.
-**Do not add any files to this repo.**
-
-####Forking this repository
-To fork this repository you need to follow the instructions below:
-```bash
-git clone <your new repository>
-cd <your new repository>
-git remote add upstream https://github.com/ou-real/nevil-base.git
-git fetch upstream
-git merge upstream/master
-git push origin master
-```
-Now you have a fork of nevil-base. 
-
-####Making changes
-To add experiments you need to extend the following classes and provide your own implementation for **at least** the virtual methods. The files prefixed with test are place holders and can be deleted. You may follow the pattern used in test files. Here is a list of classes that you need to extend: 
-* `arena` Example: `test_arena`
-* `robot` Example: `test_robot`
-* `individual` Example: `test_individual`
-* `trial` Example: `test_trial`. You need to include this module in `trial_controller.hpp` and change the type of `* _trial` to `nevil::your_trial`
-* You also need to make a population class Example: `test_population`
-
-You can look at other experiments in this [organization](https://github.com/ou-real) as a guide.
-
-####Keep up to date with nevil-base
-Too keep your code up to date with this repository, you can follow the instructions on [syncing a fork](https://help.github.com/articles/syncing-a-fork/) to cherry pick the changes that are made to `nevil-base`. This will not override your changes.
+###Sibling Experiment
+####Experiment arguments
+* `sn`:
+* `mr`:
+* `br`:
 
 ##Dependencies
 * [GCC](https://gcc.gnu.org) or [Clang](http://clang.llvm.org)
@@ -132,7 +106,7 @@ sudo apt-get install git-core
 sudo apt-get install libqt4-dev
 ```
 ##Structure
-    nevil-base
+    nevil-sibling
     ├── README.md                   - Description
     ├── .gitignore                  - Files ignore by Git
     ├── CMakeLists.txt              - Cmake file for this project
@@ -158,9 +132,9 @@ sudo apt-get install libqt4-dev
         ├── util                    - Implementation files for utility modules
         └── *.cpp                   - Other implementation files specific to the project
 
-##[Potential Bugs](https://github.com/ou-real/nevil-base/issues)
+##[Potential Bugs](https://github.com/ou-real/nevil-sibling/issues)
 
-##[To do](https://github.com/ou-real/nevil-base/milestones)
+##[To do](https://github.com/ou-real/nevil-sibling/milestones)
 
 ##License
 [MIT license](http://opensource.org/licenses/MIT)

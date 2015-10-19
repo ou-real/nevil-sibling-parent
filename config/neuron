@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cd ../build;
+
+#Experiment
+./nevil -xp_path experiment -tn 0 -xn SiblingNeuronTrial -sn true 
+
+#Control
+./nevil -xp_path control -tn 0 -xn SiblingNeuronTrial -sn false

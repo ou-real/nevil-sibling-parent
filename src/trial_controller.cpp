@@ -11,9 +11,9 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _population_size = 80;
   _max_generation_num = 200;
   _max_step_num = 1000;
-  std::string trial_name = "TestTrial";
+  std::string trial_name = "SiblingNeuronTrial";
   float mutation_rate = 0.25;
-  float bracket_ratio = 0.1;
+  float bracket_ratio = 0.10;
 
   // Reading the command line arguments
   nevil::args::const_iterator it;
@@ -56,26 +56,39 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   else
     cl_args["mr"] = std::to_string(mutation_rate);
 
+
+  // Sibling Neuron Parameter
+  if ((it = cl_args.find("sn")) != cl_args.end())
+    _root["config"]["siblingNeuron"] = (it->second == "true");
+  else
+    cl_args["sn"] = "false";
+
+  //Speed Parameter
+  if ((it = cl_args.find("speedA")) != cl_args.end())
+    _root["config"]["speedA"] = std::stod(it->second);
+  else
+    cl_args["speedA"] = "12";
+
+  if ((it = cl_args.find("speedB")) != cl_args.end())
+    _root["config"]["speedB"] = std::stod(it->second);
+  else
+    cl_args["speedB"] = "12";
+
+  //Angle Parameter
+  if ((it = cl_args.find("angleA")) != cl_args.end())
+    _root["config"]["angleA"] = std::stod(it->second);
+  else
+    cl_args["angleA"] = "0";
+
+  if ((it = cl_args.find("angleB")) != cl_args.end())
+    _root["config"]["angleB"] = std::stod(it->second);
+  else
+    cl_args["angleB"] = "0";
+
   // Creating a log file
-  // Logging into a text file example
-  _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".txt");
-  // Logging json example
-  _trial_json_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
+  _trial_logger.start_new_file(cl_args["xp_path"], "Trial_" + std::to_string(_trial_id) + ".json");
   _generational_data = Json::Value(Json::arrayValue);
 
-  // Output arguments to file
-  // Text style
-  _trial_logger << "==Config==" << std::endl;
-  _trial_logger << "-Name: " << trial_name << std::endl;
-  _trial_logger << "-Random seed: " << seed << std::endl;
-  _trial_logger << "-Number of generations: " << _max_generation_num << std::endl;
-  _trial_logger << "-Number of timesteps: " << _max_step_num << std::endl;
-  _trial_logger << "-Population size: " << _population_size << std::endl;
-  _trial_logger << "-Bracket Ratio: " << bracket_ratio << std::endl;
-  _trial_logger << "-Mutation Rate: " << mutation_rate << std::endl;
-  _trial_logger << "==Starting Trial==" << std::endl;
-
-  
   // JSON style
   _root["config"]["trialName"] = trial_name;
   _root["config"]["randomSeed"] = seed;
@@ -85,9 +98,28 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _root["config"]["bracketRatio"] = bracket_ratio;
   _root["config"]["mutationRate"] = mutation_rate;
 
-  // Instantiating a controller
-  // If you have more than one controller you can use the controller name to instantiate the right one
-  _trial = new nevil::test_trial(cl_args);
+  // Instantiating a trial
+  if (trial_name == "SiblingNeuronTrial")
+  { 
+    cl_args["angleA"] = "0";
+    cl_args["angleB"] = "0";
+    _trial = new nevil::sibling_trial(cl_args);
+  }
+  else if (trial_name == "SiblingAsymTrial")
+  {
+    cl_args["sn"] = "false";
+    _trial = new nevil::sibling_trial(cl_args);
+  }
+  else if (trial_name == "SiblingDetectionTrial")
+  {
+    cl_args["sn"] = "false";
+    _trial = new nevil::sibling_trial(cl_args); // Change this
+  }
+  else
+  {
+    printf("Trial '%s' is not defined.\nTerminating...\n", trial_name.c_str());
+    exit(1);
+  }
 
   _current_generation = 0;
   _current_individual = 0;
@@ -144,33 +176,20 @@ bool nevil::trial_controller::run()
 
 void nevil::trial_controller::_evaluate()
 {
-  _trial->epoch();
-  // Text logging
-  _trial_logger << _current_generation << "\t" << _trial->get_best_individual().get_fitness() << std::endl;
-
-  //JSON logging
   Json::Value data;
   data["generationNumber"] = _current_generation;
-  data["maxFitness"] = _trial->get_best_individual().get_fitness();
+  data["individualList"] = _trial->get_generation_data();
+ 
+  _trial->epoch();
+
+  data["bestIndividual"] = _trial->get_best_individual().json();
   _generational_data.append(data);
 }
 
 void nevil::trial_controller::_end()
 {
   printf("-Trial %d: finished\n", _trial_id);
-  //Text logging
-  _trial_logger << "==Trial Ended==" << std::endl;
-  _trial_logger << "Best chromosome " << _trial->get_best_individual().get_chromosome() << std::endl;
-  _trial_logger.close_file();
-
-  //JSON logging
-  Json::Value best_chromosome (Json::arrayValue);
-  auto best_chromosome_vec = _trial->get_best_individual().get_chromosome();
-  for (int i = 0; i < best_chromosome_vec.size(); ++i)
-    best_chromosome.append(best_chromosome_vec[i]);
-
   _root["generationalData"] = _generational_data;
-  _root["bestChromosome"] = best_chromosome;
-  _trial_json_logger.write(_root);
-  _trial_json_logger.close_file();
+  _trial_logger.write(_root);
+  _trial_logger.close_file();
 }
