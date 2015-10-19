@@ -33,7 +33,7 @@ Color sets for switch and light
 1.0 | 1.0 | 0.0 light turned On
 
 0.4 | 0.0 | 1.0 switch turned off
-0.4 | 0.5 | 1.0 switch turned On  
+0.9 | 0.5 | 1.0 switch turned On  
 */
 const std::vector<double> nevil::robot::_get_sensor_inputs()
 {
@@ -60,13 +60,8 @@ const std::vector<double> nevil::robot::_get_sensor_inputs()
   }
 
   // adjust the sensor information
-  for (size_t i = 0; i < SENSOR_NUM; ++i) 
-  {
-    if (sensor_counter[i] > 7)
-      sensor_counter[i] = 1;
-    else
-      sensor_counter[i] = 0;
-  }
+  for (size_t i = 0; i < SENSOR_NUM; ++i)
+    sensor_counter[i] = sensor_counter[i] > 7;
 
   return sensor_counter;
 }
