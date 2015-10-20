@@ -16,8 +16,9 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
     , OBJECT_HEIGHT
-    , MASS
-    , 1));
+    //, MASS
+    //, 1
+));
 
     //light A
   _add_object(new nevil::light(world_size_x / 4.0
@@ -25,8 +26,9 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
     , OBJECT_HEIGHT
-    , MASS
-    , 0.01));
+    //, MASS
+    //, 0.01
+));
   
   //switch B
   _add_object(new nevil::switch_object(world_size_x * (3 / 4.0)
@@ -34,8 +36,9 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
     , OBJECT_HEIGHT
-    , MASS
-    , 1));
+    //, MASS
+    //, 1
+));
   
   //light B
   _add_object(new nevil::light(world_size_x * (3 / 4.0)
@@ -43,11 +46,12 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_SIZE_X
     , OBJECT_SIZE_Y
     , OBJECT_HEIGHT
-    , MASS
-    , 0.01));
+    //, MASS
+    //, 0.01
+));
   
   //Wall in the middle of the field
-  /**/
+  /*
   _add_object(new nevil::wall(world_size_x / 2.0
     , world_size_y / 2.0
     , 0.01
