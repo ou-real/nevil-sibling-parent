@@ -1,10 +1,10 @@
-#NEVIL: Sibling Experiment [![Build Status](https://travis-ci.org/ou-real/nevil-sibling.svg)](https://travis-ci.org/ou-real/nevil-sibling)
+#NEVIL: Sibling Experiment [![Build Status](https://travis-ci.org/ou-real/nevil-sibling-parent.svg)](https://travis-ci.org/ou-real/nevil-sibling-parent)
 
 
 ##Usage
 You can clone this repository by running:
 ```bash
-git clone https://github.com/ou-real/nevil-sibling.git
+git clone https://github.com/ou-real/nevil-sibling-parent.git
 ```
 
 ###Compilation/Install
@@ -106,7 +106,7 @@ sudo apt-get install git-core
 sudo apt-get install libqt4-dev
 ```
 ##Structure
-    nevil-sibling
+    nevil-sibling-parent
     ├── README.md                   - Description
     ├── .gitignore                  - Files ignore by Git
     ├── CMakeLists.txt              - Cmake file for this project
@@ -132,9 +132,9 @@ sudo apt-get install libqt4-dev
         ├── util                    - Implementation files for utility modules
         └── *.cpp                   - Other implementation files specific to the project
 
-##[Potential Bugs](https://github.com/ou-real/nevil-sibling/issues)
+##[Potential Bugs](https://github.com/ou-real/nevil-sibling-parent/issues)
 
-##[To do](https://github.com/ou-real/nevil-sibling/milestones)
+##[To do](https://github.com/ou-real/nevil-sibling-parent/milestones)
 
 ##License
 [MIT license](http://opensource.org/licenses/MIT)
