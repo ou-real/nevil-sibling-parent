@@ -8,7 +8,6 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
   const double OBJECT_SIZE_X = 6;
   const double OBJECT_SIZE_Y = 0.1;
   const double OBJECT_HEIGHT = 7;
-  const double MASS = -1;
 
   //switch A
   _add_object(new nevil::switch_object(world_size_x / 4.0
