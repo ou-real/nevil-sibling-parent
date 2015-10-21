@@ -9,7 +9,6 @@
 #include "nevil/sibling_individual.hpp"
 #include "nevil/sibling_robot.hpp"
 
-
 namespace nevil
 {
   class sibling_arena : public arena

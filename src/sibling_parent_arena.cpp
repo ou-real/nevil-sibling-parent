@@ -1,6 +1,6 @@
-#include "nevil/sibling_arena.hpp"
+#include "nevil/sibling_parent_arena.hpp"
 
-nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sibling_neuron, double speed_A, double speed_B, double angle_A, double angle_B, const Enki::Color &arena_color)
+nevil::sibling_parent_arena::sibling_parent_arena(int world_size_x, int world_size_y, bool sibling_neuron, double speed_A, double speed_B, double speed_P, double angle_A, double angle_B, double angle_P, const Enki::Color &arena_color)
  : nevil::arena(world_size_x, world_size_y, arena_color)
  , _sibling_neuron(sibling_neuron)
 {
@@ -38,17 +38,18 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , OBJECT_HEIGHT));
   
   //Wall in the middle of the field
-  /**/
+  /*
   _add_object(new nevil::wall(world_size_x / 2.0
     , world_size_y / 2.0
     , 0.01
     , world_size_y
-    , OBJECT_HEIGHT));
+    , OBJECT_HEIGHT
+    , MASS));
 	/**/
 
   //--robots--
   // Create a robot named A
-  _add_robot(new nevil::sibling_robot(world_size_x / 4.0
+  _add_robot(new nevil::sibling_parent_robot(world_size_x / 4.0
     , world_size_y / 2.0
     , angle_A
     , _sibling_neuron
@@ -57,24 +58,33 @@ nevil::sibling_arena::sibling_arena(int world_size_x, int world_size_y, bool sib
     , Enki::Color(0.0, 0.0, 0.5)));
 
   // Create a robot named B
-  _add_robot(new nevil::sibling_robot(world_size_x * (3 / 4.0)
+  _add_robot(new nevil::sibling_parent_robot(world_size_x * (3 / 4.0)
     , world_size_y / 2.0
     , angle_B
     , _sibling_neuron
     , speed_B
     , "B"
     , Enki::Color(0.0, 0.5, 0.0)));
+
+  _add_robot(new nevil::sibling_parent_robot(world_size_x * (1 / 2.0)
+   , world_size_y / 2.0
+   , 0
+   , _sibling_neuron
+   , speed_P
+   , "P"
+   , Enki::Color(0.5, 0.0, 0.0)));
 }
 
-nevil::sibling_arena::~sibling_arena() {}
+nevil::sibling_parent_arena::~sibling_parent_arena() {}
 
-void nevil::sibling_arena::set_individuals(sibling_individual *sibling_a, sibling_individual *sibling_b)
+void nevil::sibling_parent_arena::set_individuals(sibling_parent_individual *sibling_a, sibling_parent_individual *sibling_b, sibling_parent_individual *parent)
 {
   _robot_vector[0]->set_individual(sibling_a);
   _robot_vector[1]->set_individual(sibling_b);
+  _robot_vector[2]->set_individual(parent);
 }
 
-bool nevil::sibling_arena::update()
+bool nevil::sibling_parent_arena::update()
 {
   // Updating the environment
   // Turning the switches and lights on based on the position of the robots

@@ -22,19 +22,19 @@ bool nevil::sibling_parent_robot::update(const std::vector<object *> &objects)
   std::vector<double> inputs = _get_sensor_inputs();
 
   if (is_at_switch())
-    _individual->set_turned_on_swich();
+    _individual->set_turned_on_switch();
 
   if (is_at_light())
   {
     // If the individual has not turned on the switch
-    if (!_individual->turned_on_swich())
+    if (!_individual->turned_on_switch())
       _individual->set_went_light_first();
 
     _individual->increase_fitness(1);
   }
 
   // If it is a sibling A
-  if (individual->is_a())
+  if (_individual->is_a())
   {
     // Add the sibling A inputs, if using 'unique neurons'
     if(_sibling_neuron)
@@ -46,7 +46,7 @@ bool nevil::sibling_parent_robot::update(const std::vector<object *> &objects)
     }
   }
   // If it is a sibling B
-  else if(individual->is_b()
+  else if(_individual->is_b())
   {
     // Add the sibling B inputs, if using 'unique neurons'
     if(_sibling_neuron)

@@ -11,7 +11,7 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _population_size = 80;
   _max_generation_num = 200;
   _max_step_num = 1000;
-  std::string trial_name = "SiblingNeuronTrial";
+  std::string trial_name = "SiblingParentNeuronTrial";
   float mutation_rate = 0.25;
   float bracket_ratio = 0.10;
 
@@ -74,6 +74,11 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   else
     cl_args["speedB"] = "12";
 
+  if ((it = cl_args.find("speedP")) != cl_args.end())
+    _root["config"]["speedP"] = std::stod(it->second);
+  else
+    cl_args["speedP"] = "12";
+
   //Angle Parameter
   if ((it = cl_args.find("angleA")) != cl_args.end())
     _root["config"]["angleA"] = std::stod(it->second);
@@ -82,6 +87,11 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
 
   if ((it = cl_args.find("angleB")) != cl_args.end())
     _root["config"]["angleB"] = std::stod(it->second);
+  else
+    cl_args["angleB"] = "0";
+
+  if ((it = cl_args.find("angleP")) != cl_args.end())
+    _root["config"]["angleP"] = std::stod(it->second);
   else
     cl_args["angleB"] = "0";
 
@@ -99,21 +109,21 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   _root["config"]["mutationRate"] = mutation_rate;
 
   // Instantiating a trial
-  if (trial_name == "SiblingNeuronTrial")
-  { 
+  if (trial_name == "SiblingParentNeuronTrial"){
     cl_args["angleA"] = "0";
     cl_args["angleB"] = "0";
-    _trial = new nevil::sibling_trial(cl_args);
+    cl_args["angleP"] = "0";
+    _trial = new nevil::sibling_parent_trial(cl_args);
   }
-  else if (trial_name == "SiblingAsymTrial")
+  else if (trial_name == "SiblingParentAsymTrial")
   {
     cl_args["sn"] = "false";
-    _trial = new nevil::sibling_trial(cl_args);
+    _trial = new nevil::sibling_parent_trial(cl_args);
   }
-  else if (trial_name == "SiblingDetectionTrial")
+  else if (trial_name == "SiblingParentDetectionTrial")
   {
     cl_args["sn"] = "false";
-    _trial = new nevil::sibling_trial(cl_args); // Change this
+    _trial = new nevil::sibling_sibling_trial(cl_args); // Change this
   }
   else
   {

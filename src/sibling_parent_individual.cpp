@@ -4,8 +4,8 @@ nevil::sibling_parent_individual::sibling_parent_individual() {}
 
 nevil::sibling_parent_individual::sibling_parent_individual(size_t chromo_size, bool is_sibling_a, bool is_parent)
   : _is_sibling_a(!is_parent && is_sibling_a)
-  , _is_sibling_b(!isParent && !is_sibling_a)
-  , _is_parent(isParent)
+  , _is_sibling_b(!is_parent && !is_sibling_a)
+  , _is_parent(is_parent)
   , _parent_uuid("NONE")
   , _light_first(false)
   , _turned_on_switch(false)
@@ -19,8 +19,8 @@ nevil::sibling_parent_individual::sibling_parent_individual(size_t chromo_size, 
 
 nevil::sibling_parent_individual::sibling_parent_individual(const std::vector<double> &chromosome, bool is_sibling_a, bool is_parent)
   : _is_sibling_a(is_sibling_a)
-  , _is_sibling_b(!isParent && !is_sibling_a)
-  , _is_parent(isParent)
+  , _is_sibling_b(!is_parent && !is_sibling_a)
+  , _is_parent(is_parent)
   , _parent_uuid("NONE")
   , _light_first(false)
   , _turned_on_switch(false)
@@ -112,7 +112,7 @@ void nevil::sibling_parent_individual::increase_fitness(int fitness)
 
 nevil::sibling_parent_individual* nevil::sibling_parent_individual::clone(bool is_a, bool is_parent) const
 {
-  nevil::sibling_parent_individual* new_individual = new sibling_parent_individual(_chromosome, is_a && !is_parent, !is_a && !is_parent, is_parent);
+  nevil::sibling_parent_individual* new_individual = new sibling_parent_individual(_chromosome, is_a, is_parent);
   new_individual->_parent_uuid = _uuid;
   return new_individual;
 }
