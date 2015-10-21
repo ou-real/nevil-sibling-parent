@@ -123,7 +123,7 @@ nevil::trial_controller::trial_controller(int id, unsigned seed, nevil::args &cl
   else if (trial_name == "SiblingParentDetectionTrial")
   {
     cl_args["sn"] = "false";
-    _trial = new nevil::sibling_sibling_trial(cl_args); // Change this
+    _trial = new nevil::sibling_parent_trial(cl_args); // Change this
   }
   else
   {
