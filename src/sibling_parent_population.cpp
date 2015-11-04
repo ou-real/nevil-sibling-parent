@@ -1,13 +1,12 @@
 #include "nevil/sibling_parent_population.hpp"
 
-int nevil::sibling_parent_population::_individual_counter = 0;
-
 nevil::sibling_parent_population::sibling_parent_population() {}
 
 nevil::sibling_parent_population::sibling_parent_population(size_t pop_size, bool sibling_neurons, float bracket_ratio, float mutation_rate)
   : _population_size(pop_size)
   , _bracket_size(int(bracket_ratio * pop_size))
   , _mutation_rate(mutation_rate)
+  , _individual_counter(0)
 {
   _individual_list = std::vector<nevil::sibling_parent_individual *>(3 * _population_size);
   int genome_size = 38 + 6*sibling_neurons; //sibling_neurons will cast to either 0 or 1. 2*(1 for isA, 1 for isB, 1 for isParent) are the sibling neurons
@@ -91,6 +90,7 @@ nevil::sibling_parent_population &nevil::sibling_parent_population::operator=(co
   _population_size = rhs._population_size;
   _mutation_rate = rhs._mutation_rate;
   _bracket_size = rhs._bracket_size;
+  _individual_counter = rhs._individual_counter;
   _individual_list = std::vector<nevil::sibling_parent_individual *> (rhs.size());
   for (int i = 0; i < _individual_list.size(); ++i)
     _individual_list[i] = new nevil::sibling_parent_individual(*rhs._individual_list[i]);
